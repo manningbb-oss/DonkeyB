@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>DBalls - Countdown</title>
+    <title>Donkey Balls - Countdown</title>
     <style>
         /* Black, Green, and White Theme */
         body {
@@ -46,15 +46,19 @@
             margin-bottom: 40px;
         }
 
-        /* Photo Styles */
-        .photo {
+        /* Avatar Styles replacing standard image tags */
+        .avatar {
             width: 110px;
             height: 110px;
             border-radius: 50%;
             border: 4px solid #00ff41;
             background-color: #222;
-            object-fit: cover;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 4rem; /* Makes the emoji large like an avatar */
             box-shadow: 0 0 15px rgba(0, 255, 65, 0.3);
+            user-select: none;
         }
 
         .icon {
@@ -111,14 +115,15 @@
 </head>
 <body>
 
-    <div class="logo">DB</div>
-    <h1 id="main-heading">Waiting for Desmond</h1>
-    <div class="route">Pietermaritzburg ✈️ Durban</div>
+    <div class="logo">Donkey Balls</div>
+    <h1 id="main-heading">Waiting for Des</h1>
+    <div class="route">Pietermaritzburg ✈️ JNB</div>
 
     <div class="photos">
-        <img src="desmond.jpg" alt="Desmond" class="photo">
+        <!-- Using native emojis for avatars (Silver hair man, Brunette woman) -->
+        <div class="avatar" title="Des">👨‍🦳</div>
         <span class="icon">✈️</span>
-        <img src="bernadette.jpg" alt="Bernadette" class="photo">
+        <div class="avatar" title="Bern">👩🏽</div>
     </div>
 
     <div class="countdown-container" id="timer">
@@ -140,12 +145,10 @@
         const x = setInterval(function() {
             const now = new Date().getTime();
             let targetDate = landingDate;
-            let isTogether = false;
 
             // Phase 2: He has landed, count down to departure
             if (now > landingDate && now < departureDate) {
                 targetDate = departureDate;
-                isTogether = true;
                 document.getElementById('main-heading').innerText = "Time Together";
                 document.querySelector('.icon').innerText = "❤️";
                 document.getElementById('dynamic-message').innerText = "Make every second count!";
@@ -159,8 +162,20 @@
                 return;
             }
 
-            // Time calculations
+            // Time calculations to fix the broken script
             const distance = targetDate - now;
             const days = Math.floor(distance / (1000 * 60 * 60 * 24));
             const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-            const minutes = Math.floor
+            const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+            const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+            // Output the result and force double digits (e.g. 09 instead of 9)
+            document.getElementById("days").innerHTML = days.toString().padStart(2, '0');
+            document.getElementById("hours").innerHTML = hours.toString().padStart(2, '0');
+            document.getElementById("mins").innerHTML = minutes.toString().padStart(2, '0');
+            document.getElementById("secs").innerHTML = seconds.toString().padStart(2, '0');
+            
+        }, 1000);
+    </script>
+</body>
+</html>
